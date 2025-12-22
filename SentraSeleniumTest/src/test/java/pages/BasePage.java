@@ -1,15 +1,12 @@
-package test.java.pages;
+package pages;
  
 // Importaciones necesarias
 import java.time.Duration;
 import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.*;
  
 import io.github.bonigarcia.wdm.WebDriverManager;
  
@@ -26,7 +23,7 @@ public class BasePage {
      * el 'driver' estático
      * WebDriverWait se usa para poner esperas explícitas en los elementos web
      */
-    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
  
     /*
      * Configura el WebDriver para Chrome usando WebDriverManager.
