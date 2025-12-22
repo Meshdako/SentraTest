@@ -22,18 +22,15 @@ dependencies {
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     implementation 'org.seleniumhq.selenium:selenium-java:4.39.0'
 
-    // https://mvnrepository.com/artifact/org.testng/testng
-    testImplementation 'org.testng:testng:7.11.0'
-
     // https://mvnrepository.com/artifact/io.cucumber/cucumber-java
     implementation 'io.cucumber:cucumber-java:7.33.0'
 
     // https://mvnrepository.com/artifact/io.cucumber/cucumber-junit
     testImplementation 'io.cucumber:cucumber-junit:7.33.0'
+    testImplementation 'junit:junit:4.13.2'
 }
 
 tasks.named('test') {
-    useTestNG();
     
     systemProperty "cucumber.options", System.getProperty("cucumber.options")
 }
