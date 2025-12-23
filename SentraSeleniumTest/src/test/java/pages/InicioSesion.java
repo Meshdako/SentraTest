@@ -4,11 +4,11 @@ public class InicioSesion extends BasePage {
     private String emailString = "//input[@id='email']";
     private String passwoString = "//input[@id='password']";
     private String loginButton = "//button[@type='submit']";
-    private String messageLabel = "//div[@class='MuiAlert-message css-1xsto0d']";
+    private String messageLabel = "//div[@role='alert']";
     private String logoutSection = "//span[@class='MuiTypography-root MuiTypography-body1 MuiListItemText-primary css-yb0lig']";
 
     public InicioSesion() {
-        super(driver);
+        super();
     }
 
     public void navigateToSentraTask() {

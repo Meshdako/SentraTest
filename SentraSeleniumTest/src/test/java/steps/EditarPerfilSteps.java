@@ -17,8 +17,8 @@ public class EditarPerfilSteps {
             landingPage.editingProfile(name, lastName);
     }
 
-    @Then("Aparece un mensaje de validación")
+    @Then("Se valida la edición")
     public void iEditedTheProfile() {
-        Assert.assertTrue("El mensaje", landingPage.messageToDisplay());
+        Assert.assertTrue("¡ALERTA!", landingPage.messageToDisplay());
     }
 }

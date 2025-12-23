@@ -7,4 +7,5 @@ Característica: Editar perfil
     Escenario: Realizar cambio de nombre y apellido
         Cuando Navego a la sección del perfil
         Y Edito el nombre por "Jesús" y el apellido por "De Nazaret"
+        Entonces Se valida la edición
         

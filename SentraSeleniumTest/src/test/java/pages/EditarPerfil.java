@@ -6,10 +6,10 @@ public class EditarPerfil extends BasePage {
     private String modifyUserButton = "//button[normalize-space()='Modificar Usuario']";
     private String nameInput = "//input[@id='firstname']";
     private String lastNameInput = "//input[@id='lastname']";
-    private String validPopUp = "//div[@class='MuiAlert-message css-1xsto0d']";
+    private String validPopUp = "//div[@role='alert']";
 
     public EditarPerfil() {
-        super(driver);
+        super();
     }
 
     public void navigateToProfile() {
