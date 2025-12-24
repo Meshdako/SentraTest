@@ -1,14 +1,80 @@
 # SentraTest
-Sentra Test to qualify for QA Junior
+Proyecto desarrollado por Martin Sobarzo Huerta
+Evaluación técnica QA Junior
 
 ## Desarrollo
-Voluptate eu id ipsum labore ad ad voluptate sint irure. Minim laboris excepteur nostrud nostrud sit amet in excepteur pariatur et minim fugiat in fugiat. Qui nulla proident deserunt culpa sint sunt sint qui. Mollit deserunt minim id aliqua ut magna sit aliquip sint sunt qui ipsum.
+El objetivo de este proyecto es validar de manera automatizada los principales flujos funcionales de una aplicación de gestión de tareas, priorizando escenarios críticos como:
+
+* Inicio de sesión
+* Creación de usuario
+* Creación de tareas
+* Ordenamiento de tareas por título, prioridad y fecha de vencimiento.
+* Edición del usuario.
+
+El enfoque del proyecto está orientado a demostrar conocimientos en automatización de pruebas, estructuración de proyectos y análisis de resultados.
 
 ## Organización
-Ut est minim pariatur officia quis mollit nostrud mollit amet non id esse duis. Labore veniam ut labore ullamco minim aute. Deserunt cupidatat laborum dolore proident commodo ex ullamco amet aute cupidatat cupidatat proident. Consectetur ad eu magna cupidatat ipsum sit commodo sint tempor amet cupidatat nisi qui culpa. Duis ipsum labore officia sunt officia eiusmod cillum sunt nulla elit nulla ut nisi. Ullamco reprehenderit eu tempor anim ut deserunt nostrud culpa quis enim est. Id commodo elit sunt ea sunt labore mollit.
+
+* src/test/java/pages → Page Objects
+    * BasePage → Esqueleto del proyecto.
+* src/test/java/runner → TestRunner.java
+* src/test/java/steps → Step Definitions
+* src/test/resources/features → archivos .feature
+
+```
+src
+└── test
+    ├── java
+    │   ├── pages
+    │   │   ├── BasePage.java        → Clase base con métodos comunes
+    │   │   └── *.java               → Page Object de las pantallas principales
+    │   ├── runner
+    │   │   └── TestRunner.java      → Runner de Cucumber
+    │   └── steps
+    │       └── *.java               → Definición de pasos (Step Definitions) de las pantallas principales
+    └── resources
+        └── features
+            └── *.feature            → Escenarios escritos en Gherkin para todas las pantallas principales
+```
+### Teconologías Utilizadas
+* Java
+* Selenium WebDriver
+* Cucumber (Gherkin)
+* Gradle
+* JUnit
+
 
 ## Ejecución
-Fugiat consequat in culpa dolor ullamco velit eiusmod excepteur. Voluptate dolor laborum anim minim in ipsum labore ad et enim et. Dolore irure non dolore irure exercitation.
+Para la ejecución del proyecto primero debe clonar el mismo.
+```
+$ git clone git@github.com:Meshdako/SentraTest.git
+$ cd SentraTest
+$ cd SentraSeleniumTest
+```
+Una vez clonado el proyecto, se recomienda ingresar a la carpeta /SentraSeleniumTest y escribir el siguiente comando dentro de la terminal.
+```
+$ gradle clean test
+```
+En caso de que no funcione, se recomienda ejecutar el siguiente comando
+```
+$ gradle build
+```
+Con esto, se permite la compilación en caso de que exista algún error.
 
 ## Resultados
-Mollit nulla aute velit esse est sit sunt. Amet nostrud aliqua sit nisi pariatur incididunt elit nostrud adipisicing laborum. Ipsum cillum eiusmod proident tempor duis voluptate aute ipsum ex in. Nostrud nulla amet eiusmod mollit. Consectetur non nisi ea sunt occaecat.
+Al finalizar la ejecución de las pruebas, se generan reportes automáticos de Gradle en formato HTML, los cuales contienen:
+
+* Escenarios ejecutados
+* Estado de cada escenario (Passed / Failed)
+* Detalle de los pasos ejecutados
+* Tiempos de ejecución
+
+Los reportes se encuentran en el directorio:
+```
+SentraSeleniumTest\build\reports\tests\test\index.html
+```
+Existe otro reporte que se genera si se ejecuta el TestRunner.java el cual quedará dentro del siguiente directorio:
+```
+SentraSeleniumTest\target\cucumber-reports.html
+```
+Estos reportes constituyen la evidencia técnica de la ejecución de las pruebas automatizadas y se complementan con la matriz de casos de prueba documentada.
