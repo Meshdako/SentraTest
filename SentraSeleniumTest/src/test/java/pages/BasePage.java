@@ -3,13 +3,13 @@ package pages;
 // Importaciones necesarias
 import java.time.Duration;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import org.jspecify.annotations.NonNull;
-import org.junit.rules.ExpectedException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.*;
 
+import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BasePage {
@@ -19,26 +19,27 @@ public class BasePage {
      * subclases
      */
     protected static WebDriver driver;
-    
+
     // WebDriverWait se usa para poner esperas explícitas en los elementos web
     WebDriverWait wait;
 
-    // Creamos nuestro constructor sin parámetros, así el driver se crea solo una vez.
+    // Creamos nuestro constructor sin parámetros, así el driver se crea solo una
+    // vez.
     public BasePage() {
-        if( driver == null) {
+        if (driver == null) {
             WebDriverManager.chromedriver().setup();
             driver = new ChromeDriver();
             driver.manage().window().maximize();
         }
-        
-        wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+        wait = new WebDriverWait(driver, Duration.ofSeconds(45));
     }
 
-    // Método estático para navegar a una URL.
+    // Método estático para Navego a una URL.
     public static void navigateTo(String url) {
         driver.get(url);
     }
-    
+
     // Método estático para cerrar la instancia del driver.
     public static void closeBrowser() {
         if (driver != null) {
@@ -57,6 +58,7 @@ public class BasePage {
         Find(locator).click();
     }
 
+    // Función que despliega un mensaje si la página indica algún error o acierto. En caso contrario indica que falló.
     public boolean message(String locator) {
         try {
             return Find(locator).isDisplayed();
@@ -102,4 +104,21 @@ public class BasePage {
         return dropdownOptions.size();
     }
 
+    // Función que permite obtener una captura de pantalla cuando el escenario ejecutado falla.
+    public static void takeANewScreenshot(Scenario scenario) {
+        if (scenario.isFailed()) {
+            scenario.log("¡ADVERTENCIA! El escenario falló.");
+            final byte[] screenshot = ((TakesScreenshot) driver)
+                    .getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Screenshot of the error");
+        }
+    }
+
+    // Función que permite devolver la lista completa de una columna de la tabla.
+    public List<String> getTexts(String locator) {
+        List<WebElement> elements = driver.findElements(By.xpath(locator));
+        return elements.stream()
+            .map(WebElement::getText)
+            .collect(Collectors.toList());
+    }
 }

@@ -7,7 +7,7 @@ import pages.InicioSesion;
 public class InicioSesionSteps {
     InicioSesion landingPage = new InicioSesion();
 
-    @Given("Navegar a 192.168.80.43:10200")
+    @Given("Navego a 192.168.80.43:10200")
     public void iNavigateToST() {
         landingPage.navigateToSentraTask();
     }
