@@ -5,32 +5,71 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.CrearPerfil;
+import pages.InicioSesion;
+import pages.TestData;
 
 public class CrearPerfilSteps {
     CrearPerfil landingPage = new CrearPerfil();
+    InicioSesion oldLandingPage = new InicioSesion();
 
     @Given("Quiero crear un perfil nuevo")
-    public void iCreateANewUser() {
+    public void iWantToCreateANewUser() {
         landingPage.creatingANewUser();
     }
-    
-    @When("Ingreso el usuario {string} y apellido {string}")
-    public void iAddName(String name, String lastName) {
-        landingPage.addName(name, lastName);
+
+    @When("Ingreso los datos válidos de usuario")
+    public void iWriteTheUserInformation() {
+        landingPage.addingTheUserInformation(
+            TestData.NEW_NAME,
+            TestData.NEW_LASTNAME,
+            TestData.NEW_EMAIL,
+            TestData.NEW_PASSWORD,
+            TestData.NEW_PASSWORD
+        );
     }
 
-    @And("El correo {string} y la a contraseña {string}")
-    public void iAddUserInfor(String email, String password) {
-        landingPage.addUserInformation(email, password);
+    @When("Ingreso los datos inválidos de usuario")
+    public void iWriteTheFalseUserInformation() {
+        landingPage.addingTheUserInformation(
+            TestData.INVALID_NAME,
+            TestData.INVALID_LASTNAME,
+            TestData.INVALID_EMAIL,
+            TestData.INVALID_PASSWORD,
+            TestData.INVALID_PASSWORD
+        );
     }
 
-    @And("Creamos el usuario")
-    public void iAddANewUser() {
-        landingPage.addANewUser();
+    @When("Ingreso los datos incorrectos de usuario")
+    public void iWriteTheWrongUserInformation() {
+        landingPage.addingTheUserInformation(
+            TestData.NEW_WRONG_NAME,
+            TestData.NEW_WRONG_LASTNAME,
+            TestData.NEW_WRONG_EMAIL,
+            TestData.NEW_WRONG_PASSWORD_1,
+            TestData.NEW_WRONG_PASSWORD_2
+        );
     }
 
-    @Then("Validamos su creación")
-    public void iCreatedANewUser() {
-        landingPage.messageToDisplay();
+    @And("Creo el perfil nuevo")
+    public void iRegisterANewUser() {
+        landingPage.registeringANewUser();
+    }
+
+    @Then("Valido el perfil nuevo válido")
+    public void iLogin() {
+        oldLandingPage.signIn(
+            TestData.NEW_EMAIL,
+            TestData.NEW_PASSWORD
+        );
+        oldLandingPage.logIn();
+    }
+
+    @Then("Valido el perfil nuevo inválido")
+    public void iFailedToCreate() {
+        oldLandingPage.signIn(
+            TestData.INVALID_EMAIL,
+            TestData.INVALID_PASSWORD
+        );
+        oldLandingPage.logIn();
     }
 }

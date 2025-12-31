@@ -8,7 +8,7 @@ public class CrearPerfil extends BasePage {
     private String emailInput = "(//input[@id='email'])[2]";
     private String firstPassInput = "(//input[@id='password'])[2]";
     private String secondPassInput = "(//input[@id='repeat_password'])[1]";
-    private String alert = "//div[@class='MuiAlert-message css-1xsto0d']";
+    private String alert = "//div[@role='alert']";
 
     public CrearPerfil() {
         super();
@@ -18,22 +18,15 @@ public class CrearPerfil extends BasePage {
         clickElement(newProfileButton);
     }
 
-    public void addName(String name, String lastName) {
+    public void addingTheUserInformation(String name, String lastName, String email, String password_1, String password_2) {
         write(nameInput, name);
         write(lastNameInput, lastName);
-    }
-
-    public void addUserInformation(String email, String password) {
         write(emailInput, email);
-        write(firstPassInput, password);
-        write(secondPassInput, password);
+        write(firstPassInput, password_1);
+        write(secondPassInput, password_2);
     }
 
-    public void addANewUser() {
+    public void registeringANewUser() {
         clickElement(registerButton);
-    }
-
-    public Boolean messageToDisplay() {
-        return message(alert);
     }
 }
