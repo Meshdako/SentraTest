@@ -73,3 +73,12 @@ Existe otro reporte que se genera si se ejecuta el TestRunner.java el cual queda
 SentraSeleniumTest\target\cucumber-reports.html
 ```
 Estos reportes constituyen la evidencia técnica de la ejecución de las pruebas automatizadas y se complementan con la matriz de casos de prueba documentada.
+
+### Reportes
+Dentro del repositorio hay una carpeta llamada *reportes*, la cual está en la raíz principal del repositorio. Dicha carpeta posee los últimos reportes hechos en mi equipo, mostrando los resultados obtenidos, de esa manera se pueden comparara con los nuevos resultados que se obtendrán al volver a ejecutar el programa.
+
+Es importante destacar que algunos escenearios tienen un resultado **fallido** y es porque es el resultado esperado. Algunos escenarios deben fallar, porque si continuaran sería un peligro de seguridad o integridad de los datos. Sin embargo, hay escenarios exitosos, pero que muestran la falta de validación de información, como la creación del usuario, ya que permite crear un usuario sin validar el formato de su correo, lo cual crea un usuario *fantasma*, por decir de alguna manera.
+
+---
+# Muchas gracias
+31/12/2025
