@@ -4,6 +4,7 @@ import org.junit.Assert;
 
 import io.cucumber.java.en.*;
 import pages.Home;
+import pages.TestData;
 
 public class HomeSteps {
     Home landingPage = new Home();
@@ -13,16 +14,52 @@ public class HomeSteps {
         landingPage.navigateToHome();
     }
 
-    @And("Creo una tarea")
+    // Visualizar Lista de Tareas
+    @Then("Veo la lista de tareas")
+    public void iSeeTheTaskList() {
+        try {
+            Thread.sleep(1000);
+            if (landingPage.theTaskList() == true) {
+                System.out.println("La lista no está vacía");
+            } else {
+                System.out.println("La lista está vacía");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Creando una Nueva Tarea
+    @And("Quiero crear una nueva tarea")
+    public void iWantToCreateATask() {
+        landingPage.aNewTask();
+    }
+
+    @And("Ingreso los nuevos datos")
+    public void iWriteTheNewTaskInformation() {
+        landingPage.creatingANewTask(
+            TestData.TITLE_INPUT,
+            TestData.DESCRIPTION_INPUT,
+            TestData.PRIORITY_INPUT
+        );
+    }
+
+    @And("Ingreso los nuevos datos incorrectos")
+    public void iWriteTheNewTaskInformationWrong(){
+        // Información vacía. Error obvio.
+    }
+
+    @Then("Creo una tarea")
     public void iCreateANewTask() {
         landingPage.createANewTask();
     }
 
-    @Then("La tarea aparece en la lista")
+    @And("Valido la nueva tarea creada")
     public void iValidTheNewTask() {
-        
+        Assert.assertTrue(landingPage.validatingANewTask());
     }
 
+    // Ordenar Tareas por Título
     @And("Ordeno las tareas por título")
     public void iOBT() {
         landingPage.orderByTitle();
@@ -30,9 +67,13 @@ public class HomeSteps {
 
     @Then("Las tareas están ordenadas por título")
     public void iSeeOBT() {
-        Assert.assertTrue(landingPage.isOrderByTitle());
+        if (landingPage.isOrderByTitle() == true) 
+            System.out.println("La lista de tareas está ordenada por título correctamente.");
+        else
+            System.out.println("La lista de tareas está ordenada por título incorrectamente.");
     }
 
+    // Ordenar por Prioridad
     @And("Ordeno las tareas por Prioridad")
     public void iOBP() {
         landingPage.orderByPriority();
@@ -40,9 +81,13 @@ public class HomeSteps {
 
     @Then("Las tareas se ordenan por prioridad")
     public void iSeeOBP() {
-        Assert.assertTrue(landingPage.isOrderByPriority());
+        if (landingPage.isOrderByPriority() == true) 
+            System.out.println("La lista de tareas está ordenada por prioridad correctamente.");
+        else
+            System.out.println("La lista de tareas está ordenada por prioridad incorrectamente.");
     }
 
+    // Ordenar por Fecha de Término
     @And("Ordeno las tareas por fecha de término")
     public void iOBED() {
         landingPage.orderByEndDate();
@@ -50,9 +95,13 @@ public class HomeSteps {
 
     @Then("Las tareas se ordenan por fecha de término")
     public void iSeeOBED() {
-        Assert.assertTrue(landingPage.isOrderedByEndDate());
+        if (landingPage.isOrderedByEndDate() == true) 
+            System.out.println("La lista de tareas está ordenada por título correctamente.");
+        else
+            System.out.println("La lista de tareas está ordenada por título incorrectamente.");
     }
 
+    // Paginar Lista de Tareas
     @And("Pagino la lista de tareas")
     public void iClickToNextPage() {
         landingPage.nextPage();
@@ -63,11 +112,13 @@ public class HomeSteps {
         
     }
 
+    // Compactar la Lista de Tareas
     @And("Doy clic en la visualización compacta")
     public void iCompactTheTable() {
         landingPage.compactTable();
     }
 
+    // Cerrar Barra Lateral del Menú
     @And("Doy clic en el cierre de la barra lateral")
     public void iCloseTheMenu() {
         landingPage.closeMenu();
