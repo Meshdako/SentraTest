@@ -3,27 +3,34 @@ package steps;
 import io.cucumber.java.en.*;
 import org.junit.*;
 import pages.InicioSesion;
+import pages.TestData;
 
 public class InicioSesionSteps {
     InicioSesion landingPage = new InicioSesion();
 
     @Given("Navego a 192.168.80.43:10200")
-    public void iNavigateToST() {
-        landingPage.navigateToSentraTask();
+    public void iNavigateToSentraTask() {
+        landingPage.navigateToURL();
     }
 
-    @When("Ingreso el usuario {string} y la contraseña {string}")
-    public void iLoginToST(String user, String pass) {
-        landingPage.loginToSentraTask(user, pass);
+    @When("Inicio sesión con las credenciales válidas")
+    public void iLogin() {
+        landingPage.signIn(
+            TestData.VALID_EMAIL,
+            TestData.VALID_PASSWORD
+        );
     }
 
-    @Then("Aparece un mensaje de error")
-    public void iLoginSuccesful() {
-        Assert.assertTrue("¡ADVERTENCIA!", landingPage.messageToDisplay());
+    @When("Inicio sesión con las credenciales inválidas")
+    public void iFaildToLogin() {
+        landingPage.signIn(
+            TestData.INEXISTING_EMAIL,
+            TestData.INEXISTING_PASSWORD
+        );
     }
 
-    @Then("Cerramos sesión")
-    public void iLogout() {
-        landingPage.logoutFromSentraTask();
+    @Then("Accedo al sistema")
+    public void iClickToLogin() {
+        landingPage.logIn();
     }
 }

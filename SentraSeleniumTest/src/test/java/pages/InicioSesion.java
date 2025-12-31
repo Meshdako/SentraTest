@@ -11,21 +11,24 @@ public class InicioSesion extends BasePage {
         super();
     }
 
-    public void navigateToSentraTask() {
+    public void navigateToURL() {
         navigateTo("http://192.168.80.43:10200");
     }
 
-    public void loginToSentraTask(String user, String pass) {
+    public void signIn(String user, String pass) {
         write(emailString, user);
         write(passwoString, pass);
+    }
+
+    public void logIn() {
         clickElement(loginButton);
     }
 
-    public Boolean messageToDisplay() {
+    public Boolean warningToDisplay() {
         return message(messageLabel);
     }
 
-    public void logoutFromSentraTask() {
+    public void logOut() {
         clickElement(logoutSection);
     }
 }
