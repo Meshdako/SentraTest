@@ -8,6 +8,8 @@ public class FilaDeTareas {
     private LocalDateTime dueDate;
     private int priority;
 
+    public FilaDeTareas() {}
+
     public FilaDeTareas(String title, LocalDateTime creationDate, LocalDateTime dueDate, int priority) {
         this.title = title;
         this.creationDate = creationDate;

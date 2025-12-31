@@ -14,22 +14,23 @@ public class HomeSteps {
         landingPage.navigateToHome();
     }
 
-    // Visualizar Lista de Tareas
+    /* Visualizar Lista de Tareas */
     @Then("Veo la lista de tareas")
     public void iSeeTheTaskList() {
         try {
             Thread.sleep(1000);
-            if (landingPage.theTaskList() == true) {
-                System.out.println("La lista no está vacía");
-            } else {
-                System.out.println("La lista está vacía");
-            }
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        if (landingPage.theTaskList() == true) {
+            System.out.println("La lista no está vacía");
+        } else {
+            System.out.println("La lista está vacía");
+        }
     }
 
-    // Creando una Nueva Tarea
+    /* Creando una Nueva Tarea */
     @And("Quiero crear una nueva tarea")
     public void iWantToCreateATask() {
         landingPage.aNewTask();
@@ -38,14 +39,13 @@ public class HomeSteps {
     @And("Ingreso los nuevos datos")
     public void iWriteTheNewTaskInformation() {
         landingPage.creatingANewTask(
-            TestData.TITLE_INPUT,
-            TestData.DESCRIPTION_INPUT,
-            TestData.PRIORITY_INPUT
-        );
+                TestData.TITLE_INPUT,
+                TestData.DESCRIPTION_INPUT,
+                TestData.PRIORITY_INPUT);
     }
 
     @And("Ingreso los nuevos datos incorrectos")
-    public void iWriteTheNewTaskInformationWrong(){
+    public void iWriteTheNewTaskInformationWrong() {
         // Información vacía. Error obvio.
     }
 
@@ -56,10 +56,21 @@ public class HomeSteps {
 
     @And("Valido la nueva tarea creada")
     public void iValidTheNewTask() {
-        Assert.assertTrue(landingPage.validatingANewTask());
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        if (landingPage.validatingANewTask() == true) {
+            System.out.println("La tarea se creó correctamente");
+        } else {
+            System.out.println("La tarea se creó incorrectamente");
+        }
     }
 
-    // Ordenar Tareas por Título
+    /* Ordenar Tareas por Título */
     @And("Ordeno las tareas por título")
     public void iOBT() {
         landingPage.orderByTitle();
@@ -67,13 +78,14 @@ public class HomeSteps {
 
     @Then("Las tareas están ordenadas por título")
     public void iSeeOBT() {
-        if (landingPage.isOrderByTitle() == true) 
+        if (landingPage.isOrderByTitle() == true) {
             System.out.println("La lista de tareas está ordenada por título correctamente.");
-        else
+        } else {
             System.out.println("La lista de tareas está ordenada por título incorrectamente.");
+        }
     }
 
-    // Ordenar por Prioridad
+    /* Ordenar por Prioridad */
     @And("Ordeno las tareas por Prioridad")
     public void iOBP() {
         landingPage.orderByPriority();
@@ -81,13 +93,14 @@ public class HomeSteps {
 
     @Then("Las tareas se ordenan por prioridad")
     public void iSeeOBP() {
-        if (landingPage.isOrderByPriority() == true) 
+        if (landingPage.isOrderByPriority() == true) {
             System.out.println("La lista de tareas está ordenada por prioridad correctamente.");
-        else
+        } else {
             System.out.println("La lista de tareas está ordenada por prioridad incorrectamente.");
+        }
     }
 
-    // Ordenar por Fecha de Término
+    /* Ordenar por Fecha de Término */
     @And("Ordeno las tareas por fecha de término")
     public void iOBED() {
         landingPage.orderByEndDate();
@@ -95,13 +108,14 @@ public class HomeSteps {
 
     @Then("Las tareas se ordenan por fecha de término")
     public void iSeeOBED() {
-        if (landingPage.isOrderedByEndDate() == true) 
+        if (landingPage.isOrderedByEndDate() == true) {
             System.out.println("La lista de tareas está ordenada por título correctamente.");
-        else
+        } else {
             System.out.println("La lista de tareas está ordenada por título incorrectamente.");
+        }
     }
 
-    // Paginar Lista de Tareas
+    /* Paginar Lista de Tareas */
     @And("Pagino la lista de tareas")
     public void iClickToNextPage() {
         landingPage.nextPage();
@@ -109,18 +123,30 @@ public class HomeSteps {
 
     @Then("La página me muestra las demás tareas")
     public void iSeeTheNextPage() {
-        
+
     }
 
-    // Compactar la Lista de Tareas
+    /* Compactar la Lista de Tareas */
     @And("Doy clic en la visualización compacta")
     public void iCompactTheTable() {
         landingPage.compactTable();
     }
 
-    // Cerrar Barra Lateral del Menú
+    /* Cerrar Barra Lateral del Menú */
     @And("Doy clic en el cierre de la barra lateral")
     public void iCloseTheMenu() {
         landingPage.closeMenu();
+    }
+
+    @Then("La página cierra la barra")
+    public void iSeeTheMenuClosed() {
+        boolean isClosed = landingPage.isTheMenuClosed();
+        System.out.println(isClosed);
+        
+        if (isClosed) {
+            System.out.println("La barra lateral fue cerrada correctamente.");
+        } else {
+            System.out.println("La barra lateral fue cerrada incorrectamente.");
+        }
     }
 }

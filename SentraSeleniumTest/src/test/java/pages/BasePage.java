@@ -32,7 +32,7 @@ public class BasePage {
             driver.manage().window().maximize();
         }
 
-        wait = new WebDriverWait(driver, Duration.ofSeconds(45));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
     }
 
     // Método estático para Navego a una URL.

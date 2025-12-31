@@ -32,7 +32,7 @@ Escenario: Ordenar por Prioridad
 Cuando Navego a la sección principal
 Y Ordeno las tareas por Prioridad
 Entonces Las tareas se ordenan por prioridad
-@solo
+
 Escenario: Ordenar por Fecha de Término
 Cuando Navego a la sección principal
 Y Ordeno las tareas por fecha de término

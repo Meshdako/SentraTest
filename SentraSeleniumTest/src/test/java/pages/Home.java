@@ -2,23 +2,17 @@ package pages;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Queue;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import pages.FilaDeTareas;
 
 public class Home extends BasePage {
     private String homeSection = "//span[normalize-space()='Home']";
@@ -38,10 +32,8 @@ public class Home extends BasePage {
     private String titleColumn = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[1]";
     private String titleButton = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[1]/span";
     /* Columna de Prioridad */
-    private String priorityColumn = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[4]";
     private String priorityButton = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[4]/span";
     /* Columna de Fecha de Vencimiento */
-    private String endDateColumn = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[3]";
     private String endDateButton = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[3]/span";
     /* Columna de Fecha de Creación */
     private String creationDateButton = "//*[@id=\"root\"]/div/main/div[2]/div/div/div[1]/table/thead/tr/th[2]/span";
@@ -51,12 +43,15 @@ public class Home extends BasePage {
     /* Automatizaciones adicionales */
     private String nextPageButton = "//button[@title='Go to next page']";
     private String previousPageButton = "//button[@title='Go to previous page']";
+
+    /* Menu */
+    private String menuColumn = "//*[@id=\"root\"]/div/div/div";
     private String closeMenuButton = "//*[@id=\"root\"]/div/div/div/div/div/div[2]/div/button";
     private String openMenuButton = "//button[@aria-label='open drawer']";
     private String compactTableButton = "//*[@id=\"root\"]/div/main/div[2]/div/label/span[1]/span[1]";
 
     private LocalDateTime timeOClock;
-
+    private FilaDeTareas newTask = new FilaDeTareas();
     private List<FilaDeTareas> originalList;
     private List<FilaDeTareas> newOrderList;
     
@@ -70,6 +65,7 @@ public class Home extends BasePage {
         tasks.clear();
 
         try {
+            @SuppressWarnings("null")
             WebElement nextPage = driver.findElement(By.xpath(nextPageButton));
 
             while (true) {
@@ -112,6 +108,7 @@ public class Home extends BasePage {
         // Volvemos a la primera página de la tabla
         try {
             while (true){
+                @SuppressWarnings("null")
                 WebElement previousPage = driver.findElement(By.xpath(previousPageButton));
                 
                 if (!previousPage.isEnabled())
@@ -157,29 +154,67 @@ public class Home extends BasePage {
         // Dejaré la fecha sin tocar, porque me genera problemas.
         // write(dateInput, "23-12-2025");
         write(priorityInput, priority);
+
+        newTask.setTitle(title);
+        newTask.setDueDate(LocalDateTime.now());
+        newTask.setPriority(Integer.parseInt(priority));
     }
 
     public void createANewTask() {
         clickElement(createTaskButton);
     }
 
-    public boolean validatingANewTask() {
-        timeOClock = LocalDateTime.now();
+    public FilaDeTareas readTask() {
+        List<WebElement> cells = driver.findElements(By.tagName("tr"));
+        Queue<String> informationCell = new LinkedList<>();
 
+        int i = 0;
+        for (WebElement cell : cells) {
+            if (i != 1 && i != 3) {
+                String aux = cell.getText().split(" : ")[1];
+
+                informationCell.add(aux);
+            }
+            i++;
+        }
+
+        FilaDeTareas auxiliarTask = new FilaDeTareas(
+            informationCell.poll(),
+            LocalDateTime.parse(informationCell.poll()),
+            LocalDateTime.parse(informationCell.poll()),
+            Integer.parseInt(informationCell.poll())
+        );
+
+        return auxiliarTask;
+    }
+
+    public boolean validatingANewTask() {
+        
         clickElement(creationDateButton);
         clickElement(creationDateButton);
         clickElement(newTaskCreated);
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-        String endDateFromUI = "//*[@id=\"root\"]/div/main/div[2]/table/tbody/tr[5]";
+        FilaDeTareas createdNewTask = readTask();
 
-        String endDate = getInformation(endDateFromUI).split(" : ")[1].substring(0, 16);
+        String firstTime = newTask.getDueDate()
+            .toString()
+            .substring(0, 16);
 
-        /* System.out.println("=== Fecha de Vencimiento ===");
-        System.out.println(endDate);
-        System.out.println("=== Fecha de Vencimiento ===");
-        System.out.println(timeOClock.toString().substring(0, 16)); */
+        String secondTime = createdNewTask.getDueDate()
+            .toString()
+            .substring(0, 16);
 
-        return timeOClock.toString().substring(0, 16).equals(endDate);
+        System.out.println(firstTime);
+        System.out.println(secondTime);
+
+        return firstTime.equals(secondTime);
     }
 
     /* Ordenar Tareas por Título */
@@ -307,8 +342,26 @@ public class Home extends BasePage {
         clickElement(openMenuButton);
     }
 
+    public boolean isTheMenuClosed() {
+        try {
+            Thread.sleep(1000);   
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        @SuppressWarnings("null")
+        WebElement element = driver.findElement(By.xpath(menuColumn));
+        String visibility = element.getCssValue("visibility");
+        
+        System.out.println(visibility);
+        
+        return visibility.equals("hidden");
+    }
+
     /* Compactar la Lista de Tareas */
     public void compactTable() {
         clickElement(compactTableButton);
     }
+
 }
