@@ -61,6 +61,7 @@ public class BasePage {
     // Función que despliega un mensaje si la página indica algún error o acierto. En caso contrario indica que falló.
     public boolean message(String locator) {
         try {
+            System.out.println(Find(locator).getText());
             return Find(locator).isDisplayed();
         } catch (Exception e) {
             // Si el elemento no existe o no aparece, retorna false
@@ -105,13 +106,17 @@ public class BasePage {
     }
 
     // Función que permite obtener una captura de pantalla cuando el escenario ejecutado falla.
-    public static void takeANewScreenshot(Scenario scenario) {
-        if (scenario.isFailed()) {
-            scenario.log("¡ADVERTENCIA! El escenario falló.");
-            final byte[] screenshot = ((TakesScreenshot) driver)
-                    .getScreenshotAs(OutputType.BYTES);
-            scenario.attach(screenshot, "image/png", "Screenshot of the error");
-        }
+    public static void takeANewScreenshot(Scenario scenario) throws InterruptedException {
+        String failedSceneario = "¡ADVERTENCIA! El escenario falló.";
+        String succesfulSceneraio = "Esceneario válido.";
+
+        Thread.sleep(1000); 
+
+        scenario.log((scenario.isFailed()) ? failedSceneario : succesfulSceneraio);
+
+        final byte[] screenshot = ((TakesScreenshot) driver)
+                .getScreenshotAs(OutputType.BYTES);
+        scenario.attach(screenshot, "image/png", "Screenshot");
     }
 
     // Función que permite devolver la lista completa de una columna de la tabla.
@@ -120,5 +125,12 @@ public class BasePage {
         return elements.stream()
             .map(WebElement::getText)
             .collect(Collectors.toList());
+    }
+
+    // Función que devuelve el texto del locator
+    public String getInformation(String locator) {
+        String info = driver.findElement(By.xpath(locator)).getText();
+        
+        return info;
     }
 }
