@@ -1,6 +1,7 @@
 # SentraTest
 Proyecto desarrollado por Martin Sobarzo Huerta
-Evaluación técnica QA Junior
+
+**Evaluación Técnica: QA Junior**
 
 ## Desarrollo
 El objetivo de este proyecto es validar de manera automatizada los principales flujos funcionales de una aplicación de gestión de tareas, priorizando escenarios críticos como:
@@ -14,12 +15,6 @@ El objetivo de este proyecto es validar de manera automatizada los principales f
 El enfoque del proyecto está orientado a demostrar conocimientos en automatización de pruebas, estructuración de proyectos y análisis de resultados.
 
 ## Organización
-
-* src/test/java/pages → Page Objects
-    * BasePage → Esqueleto del proyecto.
-* src/test/java/runner → TestRunner.java
-* src/test/java/steps → Step Definitions
-* src/test/resources/features → archivos .feature
 
 ```
 src
